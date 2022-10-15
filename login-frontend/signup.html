@@ -1,0 +1,75 @@
+
+ <link rel="stylesheet" href="./style1.css" />
+<body>
+    <main>
+        
+      <header>
+        <h1 style="color: black">Track your expense</h1>
+        <p style="color: black">
+            It helps to keep an accurate record of your money inflow and outflow.
+             Many people in India live on a fixed income, and they find that towards the end of the month they don't have sufficient money to meet their needs.
+        </p>
+      </header>
+      <form id = "register" method="post">
+        <h1>Registration Form</h1>
+        <div id="formPad">
+          <input
+            type="text"
+            name="fname"
+            id="fname"
+            placeholder="Full Name"
+            required
+          />
+          
+          <p class="errMsg"></p>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email Address"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            required
+          />
+          <p class="errMsg"></p>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <p class="errMsg"></p>
+          <input
+            type="number"
+            name="lname"
+            id="phone"
+            placeholder="Contact number"
+            required
+          />
+          <p class="errMsg"></p>
+          <input type="submit" value="Sign up" id="submit" />
+          <p>
+            By clicking the button, you are agreeing to our
+            <a href="#">Terms and Services</a>
+            <a href="./login.html">Login now</a>
+          </p>
+        </div>
+      </form>
+    </main>
+    <div id = 'container'>
+      
+    </div>
+
+    <footer>
+      <p class="attribution">
+       Project By
+        <a href="" target="_blank"
+          >Sharpener Mentor</a
+        >. Coded by
+        <a href=""></a>.
+      </p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <script src="./signup.js"></script>
+  </body>
+</html>
