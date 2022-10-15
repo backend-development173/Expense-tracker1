@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const sequelize=require('./util/database')
 const user=require('./models/user');
 const expense=require('./models/expense')
+const premiumorder = require('./models/premiumorder');
+
 
 
 const expenseRoutes=require('./routes/expense')
@@ -21,8 +23,10 @@ app.use(express.static(path.join(__dirname, '/public')))
 app.use(express.json());
 
 const userRoutes=require('./routes/auth')
+const premiumroutes  = require('./routes/premium');
 app.use('/user',userRoutes)
 app.use('/expense',expenseRoutes);
+app.use(premiumroutes);
 // app.use('/purchase',purchaseRoutes);
 // app.use('/password',forgotPasswordRoutes)
 
@@ -31,10 +35,11 @@ app.use('/expense',expenseRoutes);
 
 expense.belongsTo(user,{constraints:true,onDelete:'CASCADE'});
 user.hasMany(expense)
+premiumorder.belongsTo(user);
+user.hasMany(premiumorder);
 
-
-// user.hasMany(order);
-// order.belongsTo(user)
+user.hasMany(premiumorder);
+premiumorder.belongsTo(user)
 
 
 // user.hasMany(ForgotPassword);

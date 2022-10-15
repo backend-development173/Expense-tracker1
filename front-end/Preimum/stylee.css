@@ -17,6 +17,16 @@ input[type=number], select {
     box-sizing: border-box;
   }
 
+input[type=submit] {
+  width: 20%;
+  background-color: #894607;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
 input[type=submit2] {
   width: 6%;
@@ -70,41 +80,6 @@ font-size: 50px;
   position:fixed;
   bottom:10px;
   left:10px;
-}
-
-
-input[type=text], select {
-  width: 50%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-input[type=number], select {
-    width: 50%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-
-input[type=submit] {
-  width: 50%;
-  background-color: #613e05;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
-  background-color: #45a049;
 }
 
 div {
@@ -169,7 +144,7 @@ body.dark {
 }
 
 .toggle-container label {
-  background-color: rgb(13, 74, 180);
+  background-color: rebeccapurple;
   border-radius: 50%;
   display: inline-block;
   width: 50px;
@@ -214,15 +189,4 @@ body.dark ul{
 
 .toggle-container input {
   visibility: hidden;
-}
-
-#premium{
-  width: 10%;
-  background-color: #613e05;
-  color: white;
-  padding: 14px 20px;
-  margin-right:100px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }

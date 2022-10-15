@@ -17,17 +17,15 @@ function notifyUser(message){
     document.getElementById('expense').addEventListener('submit',(e)=>{
     e.preventDefault()
    
-    let amount=document.getElementById('amount').value;
-    let description=document.getElementById('description').value;
-    let category=document.getElementById('category').value;
+    const amount=document.getElementById('amount').value;
+    const description=document.getElementById('description').value;
+    const category=document.getElementById('category').value;
     const obj={
         description,
         category,
       amount
     }
-    amount = " ";
-    description = " ";
-    category = " ";
+   
     console.log(obj)
     const token=localStorage.getItem('token')
     axios.post('http://localhost:3000/expense/AddExpense',obj,{headers:{"Authorization":token}}).then(result=>{
@@ -103,74 +101,7 @@ const logout  = document.getElementById('logout').addEventListener('click',(e)=>
 })
 
 
-const premiumBtn = document.getElementById("premium");
-const payBtn=document.getElementById('pay')
-const close = document.getElementById("close");
-const container = document.getElementById("popup-container");
-const amount=49900
-let orderId;
-
-premiumBtn.addEventListener("click", () => {
-    console.log("clickedpre")
-    const token=localStorage.getItem('token')
-    container.classList.add("active");
-    axios.post('http://localhost:3000/premium/create/order',{amount:amount},{headers:{"Authorization":token}})   
-    .then(response=>{
-        orderId=response.data.order.id;
-        payBtn.style="display:block"
-    })
-    .catch(err=>{
-        console.log(err)
-    })
-});
-
-
-close.addEventListener("click", () => {
-    container.classList.remove("active");
-    payBtn.style="display:none"
-});
-
-let paymentId;
-let signature;
-payBtn.addEventListener('click',(e)=>{
-    container.classList.remove("active");
-    payBtn.style="display:none"
-    var options = {
-        "key": "rzp_test_lpC2F9qqmivBNb", // Enter the Key ID generated from the Dashboard
-        "amount": `${amount}`, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        "currency": "INR",
-        "name": "Expense Tracker",
-        "description": "Premium",
-        //"image": "https://example.com/your_logo",
-        "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "handler": function (response){
-            paymentId=response.razorpay_payment_id;
-            signature=response.razorpay_signature;
-            alert(`Payment successful: your order ID: ${response.razorpay_order_id} and payment ID:${response.razorpay_payment_id}`);
-            window.location.href="./Preimum/index.html"
-            const token = localStorage.getItem('token');
-            axios.post('http://localhost:3000/transaction/detail',{orderId:orderId,paymentId:paymentId},{headers:{"Authorization":token}})
-            .then()
-            .catch(err=>{
-                console.log(err)
-            })
-        },
-        "theme": {
-            "color": "#3399cc"
-        }
-    };
-    var rzp1 = new Razorpay(options);
-    rzp1.on('payment.failed', function (response){
-            alert(response.error.description);
-    });
-    rzp1.open();
-    e.preventDefault();
-
+// 
+const premium = document.getElementById("click",(e)=>{
+    
 })
-
-//dark theme icon
-const toggle = document.getElementById("toggle");
-
-toggle.addEventListener("change", (e) => {
-    document.body.classList.toggle("dark", e.target.checked);
-});

@@ -19,9 +19,18 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.19",
+    "razorpay": "^2.8.3",
     "sequelize": "^6.21.4",
     "simple-auth-middleware": "^1.0.2"
   },
   "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/backend-development173/Expense-tracker1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/backend-development173/Expense-tracker1/issues"
+  },
+  "homepage": "https://github.com/backend-development173/Expense-tracker1#readme",
   "description": ""
 }
