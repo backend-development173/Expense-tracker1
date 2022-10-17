@@ -8,12 +8,13 @@ const sequelize=require('./util/database')
 const user=require('./models/user');
 const expense=require('./models/expense')
 const premiumorder = require('./models/premiumorder');
+const forgotPassword  = require('./models/password')
 
 
 
 const expenseRoutes=require('./routes/expense')
 // const purchaseRoutes=require('./router/purchase');
-// const forgotPasswordRoutes=require('./router/forgotPassword');
+const forgotPasswordRoutes=require('./routes/forgetpassword');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -28,7 +29,7 @@ app.use('/user',userRoutes)
 app.use('/expense',expenseRoutes);
 app.use(premiumroutes);
 // app.use('/purchase',purchaseRoutes);
-// app.use('/password',forgotPasswordRoutes)
+app.use('/password',forgotPasswordRoutes)
 
  
 
@@ -42,8 +43,8 @@ user.hasMany(premiumorder);
 premiumorder.belongsTo(user)
 
 
-// user.hasMany(ForgotPassword);
-// ForgotPassword.belongsTo(user)
+user.hasMany(forgotPassword);
+forgotPassword.belongsTo(user)
 
 sequelize.sync()
 .then(res=>app.listen(3000))

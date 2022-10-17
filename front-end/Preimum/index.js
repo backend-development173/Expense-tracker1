@@ -97,7 +97,7 @@ function  deleteExpense(id){
 // logout
 const logout  = document.getElementById('logout').addEventListener('click',(e)=>{
     localStorage.removeItem('token');
-    window.location.href = "../front-end/login.html"
+    window.location.href = "../login.html"
 })
 
 

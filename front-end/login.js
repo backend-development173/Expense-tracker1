@@ -19,7 +19,7 @@ document.getElementById('login-form').addEventListener('submit',(e)=>{
       document.getElementById('password').value='';  
       localStorage.setItem('token',result.data.token)
 
-      window.location.href='../front-end/expense.html'
+      window.location.href='./expense.html'
       
    }).catch(err=>{
     console.log(err)
@@ -29,3 +29,4 @@ document.getElementById('login-form').addEventListener('submit',(e)=>{
        
    })
 })
+

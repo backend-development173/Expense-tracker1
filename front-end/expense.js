@@ -14,9 +14,8 @@ function notifyUser(message){
 }
        /// add expenses to database
 
-    document.getElementById('expense').addEventListener('submit',(e)=>{
-    e.preventDefault()
-   
+       document.getElementById('expense').addEventListener('submit',(e)=>{
+        e.preventDefault()
     let amount=document.getElementById('amount').value;
     let description=document.getElementById('description').value;
     let category=document.getElementById('category').value;
