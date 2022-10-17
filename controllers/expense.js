@@ -13,7 +13,7 @@ exports.addExpense=(req, res,)=>{
     
     })
     .then(()=>{
-        res.status(201).json({success:true,message:'expense added successfully'})
+        res.status(201).json({amount,description,category})
     })
     .catch(err=>{
         console.log(err)
@@ -53,4 +53,37 @@ exports.deleteExpense=(req,res,next)=>{
 
 
 
-    const rs = 342;
+    exports.getAllExpense = (req, res, next) => {
+      User.findAll()
+        .then((data) => {
+      
+          res.status(200).json(data);
+        })
+        .catch((err) => {
+          res.status(400).json({ success: false, message: "something went wrong" });
+        });
+    };
+
+    
+exports.downloadExpense=async(req,res,next)=>{
+
+  try{
+    const expenses=await req.user.getExpenses();
+  const stringifiedExpenses=JSON.stringify(expenses);
+  const userId=req.user.id;
+
+  const fileName=`Expense${userId}/${new Date()}.txt`;
+  const fileUrl=await uploadToS3(stringifiedExpenses,fileName);
+  req.user.createFilesDownloaded({
+      fileUrl: fileUrl
+  });
+  res.status(200).json({fileUrl,success:true})
+  }catch(err){
+    console.log(err);
+    res.status(500).json({success:false,err})
+  }
+
+
+  
+
+}
