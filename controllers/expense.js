@@ -1,5 +1,45 @@
 const Expense=require('../models/expense')
 const User = require('../models/expense')
+const FilesDownloaded=require('../models/filesDownloaded')
+
+const AWS=require("aws-sdk")
+
+
+function uploadToS3(data,fileName){
+
+  let s3Bucket = new AWS.S3({
+    accessKeyId: process.env.IAM_USER_KEY,
+    secretAccessKey: process.env.IAM_USER_SECRET,
+  });
+
+  
+    var params = {
+      Bucket: process.env.BUCKET_NAME,
+      Key: fileName,
+      Body: data,
+      ACL: "public-read",
+    };
+    return new Promise((resolve,reject)=>{
+      s3Bucket.upload(params, (err, s3response) => {
+        if (err) {
+          console.log("something went wrong", err);
+          reject(err)
+        }
+        else {
+          console.log("success", s3response);
+          resolve(s3response.Location);
+        }
+      });
+    })
+    
+  
+}
+
+
+
+
+
+
 exports.addExpense=(req, res,)=>{
     const user=req.user;
     console.log("addExpense",user);
@@ -68,14 +108,16 @@ exports.deleteExpense=(req,res,next)=>{
 exports.downloadExpense=async(req,res,next)=>{
 
   try{
-    const expenses=await req.user.getExpenses();
+    const expenses=await User.findAll();
   const stringifiedExpenses=JSON.stringify(expenses);
   const userId=req.user.id;
 
   const fileName=`Expense${userId}/${new Date()}.txt`;
   const fileUrl=await uploadToS3(stringifiedExpenses,fileName);
-  req.user.createFilesDownloaded({
-      fileUrl: fileUrl
+  FilesDownloaded.create({
+      fileUrl: fileUrl,
+      userId:userId,
+     
   });
   res.status(200).json({fileUrl,success:true})
   }catch(err){

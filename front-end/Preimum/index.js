@@ -2,6 +2,7 @@ const expenseList=document.getElementById('expense-list');
 const mainContent=document.getElementById('main-content')
 
 
+
 document.getElementsByClassName('btn')[1].addEventListener('click',(e)=>{
     e.preventDefault()
     const description=document.getElementById('inputDescription').value;
@@ -212,3 +213,9 @@ document.getElementById("limitM").addEventListener('change',()=>{
     paginationFunc(currentPAge);
     
 });
+
+// logout
+const logout  = document.getElementById('logout').addEventListener('click',(e)=>{
+    localStorage.removeItem('token');
+    window.location.href = "/front-end/login.html"
+})

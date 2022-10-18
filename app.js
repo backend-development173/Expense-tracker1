@@ -9,6 +9,7 @@ const user=require('./models/user');
 const expense=require('./models/expense')
 const premiumorder = require('./models/premiumorder');
 const forgotPassword  = require('./models/password')
+const filesDownloaded   = require('./models/filesDownloaded')
 
 
 
@@ -45,6 +46,9 @@ premiumorder.belongsTo(user)
 
 user.hasMany(forgotPassword);
 forgotPassword.belongsTo(user)
+
+user.hasMany(filesDownloaded);
+filesDownloaded.belongsTo(user)
 
 sequelize.sync()
 .then(res=>app.listen(3000))
