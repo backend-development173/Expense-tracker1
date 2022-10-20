@@ -58,18 +58,12 @@ font-size: 50px;
 }
 
 
-#container{
-  border-radius: 5px;
-  
 
- background-color: #034b55;
- font-size: 30px;
- color: white;
- height: 300;
- width: 400px;
-  position:fixed;
-  bottom:10px;
-  left:10px;
+ 
+#container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
 }
 
 
@@ -225,4 +219,13 @@ body.dark ul{
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+
+.toast {
+  background-color: rebeccapurple;
+  border-radius: 5px;
+  color: #fff;
+  padding: 2rem;
+  margin: 1rem;
 }

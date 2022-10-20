@@ -1,6 +1,8 @@
 const Expense=require('../models/expense')
 const User = require('../models/expense')
 const FilesDownloaded=require('../models/filesDownloaded')
+const Sequelize=require('sequelize')
+const Op=Sequelize.Op
 
 const AWS=require("aws-sdk")
 
@@ -53,7 +55,7 @@ exports.addExpense=(req, res,)=>{
     
     })
     .then(()=>{
-        res.status(201).json({amount,description,category})
+        res.status(201).json({amount,description,category ,message:"Expense added Successfully"})
     })
     .catch(err=>{
         console.log(err)
@@ -64,16 +66,54 @@ exports.addExpense=(req, res,)=>{
 }
 
 exports.getExpense=(req,res,next)=>{
-    req.user.getExpenses()
-    .then(expenses=>{
-        res.status(200).json({success:true,expenses:expenses, message:"Successfully Added"})
-    })
-    .catch(err=>{
-        console.log(err)
-        res.json(err)
-    })
-}
+  const limit=req.query.limit;
+  const page= +req.query.page||1;
+  const rows= +req.query.rows||10;
+  console.log(page,rows)
+  let totalExpenses;
+  let today=new Date();
+  let date=new Date('1980-01-01');
+  if(limit=='weekly'){
+      const todayDateOnly=new Date(today.toDateString())
+      date=new Date(todayDateOnly.setDate(todayDateOnly.getDate()-6))
+  }
+  else if(limit=='daily'){
+      date=new Date(today.toDateString())
+  }
+  else if(limit=='monthly'){
+      date=new Date(today.getFullYear(),today.getMonth(),1)
+  }
 
+  req.user.countExpenses({where:{
+      createdAt : { [Op.and]:[{ [Op.gte] : date },{ [Op.lte] : today }]}
+  }
+  })
+  .then(count=>{
+      totalExpenses=count;
+      req.user.getExpenses({where:{
+          createdAt : { [Op.and]:[{ [Op.gte] : date },{ [Op.lte] : today }]}
+      },
+      order : [['createdAt','DESC']],
+      offset:(page-1)*rows,
+      limit:rows
+      })
+      .then(expenses=>{
+          // const filteredExpenses=expenses.filter((expense)=>{
+          //     return expense.createdAt>=date;
+          // })
+          return res.status(200).json({success:true,expenses:expenses,currentPage:page,hasPreviousPage:page>1,hasNextPage:(page*rows)<totalExpenses,previousPage:page-1,nextPage:page+1,lastPage:Math.ceil(totalExpenses/rows)})
+      })
+      .catch(err=>{
+          throw new Error(err)
+      })
+
+  })
+  .catch(err=>{
+      console.log(err)
+      res.json(err)
+  })
+
+}
 exports.deleteExpense=(req,res,next)=>{
     const id=req.params.expenseId;
     Expense.destroy({
